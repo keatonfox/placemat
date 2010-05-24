@@ -82,7 +82,7 @@ class FTClient(object):
         """Create a table in Fusion Tables from a CSV file with a header."""
         type_mappings = type_mappings or {}
     
-        fin = gfile.FastGFile(os.path.join(FLAGS.input_dir, filename))
+        fin = open(filename)
         csv_reader = csv.reader(fin)
         cols = csv_reader.next()
         columns_and_types = [(c, type_mappings.get(c, 'STRING')) for c in cols]
@@ -93,7 +93,7 @@ class FTClient(object):
   
     def uploadCSV(self, table_id, filename, bulk=True):
         """Upload a CSV to an existing table."""
-        fin = gfile.FastGFile(os.path.join(FLAGS.input_dir, filename))
+        fin = open(filename)
         csv_reader = csv.reader(fin)
         header_parts = csv_reader.next()
         col_keys = ','.join(["'%s'" % s for s in header_parts])
